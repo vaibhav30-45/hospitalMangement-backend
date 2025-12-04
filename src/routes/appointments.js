@@ -1,5 +1,5 @@
 import express from "express";
-import auth from "../middleware/auth.js";
+import verifyToken from "../middleware/auth.js";
 import {
   createAppointment,
   listAppointments,
@@ -8,8 +8,8 @@ import {
 
 const router = express.Router();
 
-router.post("/", auth, createAppointment);
-router.get("/", auth, listAppointments);
-router.put("/:id/status", auth, updateAppointmentStatus);
+router.post("/", verifyToken, createAppointment);
+router.get("/", verifyToken, listAppointments);
+router.put("/:id/status", verifyToken, updateAppointmentStatus);
 
 export default router;

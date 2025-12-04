@@ -1,11 +1,11 @@
 import express from "express";
-import auth from "../middleware/auth.js";
+import verifyToken from "../middleware/auth.js";
 import { createDoctor, listDoctors, getDoctor } from "../controllers/doctorController.js";
 
 const router = express.Router();
 
-router.post("/", auth, createDoctor);
-router.get("/", auth, listDoctors);
-router.get("/:id", auth, getDoctor);
+router.post("/", verifyToken, createDoctor);
+router.get("/", verifyToken, listDoctors);
+router.get("/:id", verifyToken, getDoctor);
 
 export default router;
