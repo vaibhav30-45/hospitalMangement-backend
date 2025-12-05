@@ -15,11 +15,15 @@ app.use(express.json());
 import doctorRoutes from "./src/routes/doctors.js";
 import appointmentRoutes from "./src/routes/appointments.js";
 import bloodRoutes from "./src/routes/blood.js";
+import contactRoutes from "./src/routes/contactRoutes.js";
+import ambulanceRoutes from "./src/routes/ambulanceRoutes.js";
 
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/blood", bloodRoutes);
+app.use("/api", contactRoutes);
+app.use("/api", ambulanceRoutes);
 
-app.listen(process.env.PORT, () =>
+app.listen(PORT, () =>
   console.log(`Server running on port ${process.env.PORT}`)
 );
