@@ -4,9 +4,9 @@ import { createAmbulanceBooking, getAllAmbulanceBookings, } from "../controllers
 const router = express.Router();
 
 // ✅ Frontend Booking API
-router.post("/ambulance", createAmbulanceBooking);
+router.post("/ambulanceBook", createAmbulanceBooking);
 
 // ✅ Admin API
-router.get("/ambulance", getAllAmbulanceBookings);
+router.get("/ambulanceAll", getAllAmbulanceBookings);
 
 export default router;
