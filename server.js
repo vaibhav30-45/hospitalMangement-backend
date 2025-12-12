@@ -4,7 +4,6 @@ import cors from 'cors';
 import connectDB from './src/config/db.js';
 
 import doctorRoutes from "./src/routes/doctors.js";
-import appointmentRoutes from "./src/routes/appointments.js";
 import bloodRoutes from "./src/routes/blood.js";
 import contactRoutes from "./src/routes/contactRoutes.js";
 import ambulanceRoutes from "./src/routes/ambulanceRoutes.js";
@@ -46,7 +45,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/doctors", doctorRoutes);
-app.use("/api/appointments", appointmentRoutes);
 app.use("/api/blood", bloodRoutes);
 app.use("/api", contactRoutes);
 app.use("/api/ambulance", ambulanceRoutes);
