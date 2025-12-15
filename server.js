@@ -1,17 +1,17 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import connectDB from "./config/db.js";
+import connectDB from "./src/config/db.js";
 
 //  Import Patient System Routes
-import userRoutes from "./routes/userRoute.js";
-import patientRoutes from "./routes/patients.js";
-import appointmentRoutes from "./routes/appointmentRoute.js";
-import reportRoutes from "./routes/reportRoute.js";
+import userRoutes from "./src/routes/userRoute.js";
+import patientRoutes from "./src/routes/patients.js";
+import appointmentRoutes from "./src/routes/appointmentRoute.js";
+import reportRoutes from "./src/routes/reportRoute.js";
 
 //  Import Laboratory Test Module Routes
-import testRoutes from "./routes/testRoute.js";           
-import testBookRoutes from "./routes/testbookRoute.js";   
+import testRoutes from "./src/routes/testRoute.js";           
+import testBookRoutes from "./src/routes/testbookRoute.js";   
 
 dotenv.config();
 const app = express();
