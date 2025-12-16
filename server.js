@@ -10,12 +10,11 @@ import contactRoutes from "./src/routes/contactRoutes.js";
 // ------------------------------
 //  Import Patient & Lab Routes (from remote)
 // ------------------------------
-import userRoutes from "./routes/userRoute.js";
-import patientRoutes from "./routes/patients.js";
-import appointmentRoutes2 from "./routes/appointmentRoute.js"; 
-import reportRoutes from "./routes/reportRoute.js";
-import testRoutes from "./routes/testRoute.js";
-import testBookRoutes from "./routes/testbookRoute.js";
+import userRoutes from "./src/routes/userRoute.js";
+import patientRoutes from "./src/routes/patients.js";
+import reportRoutes from "./src/routes/reportRoute.js";
+import testRoutes from "./src/routes/testRoute.js";
+import testBookRoutes from "./src/routes/testbookRoute.js";
 
 dotenv.config();
 
@@ -53,7 +52,6 @@ app.use("/api", contactRoutes);
 // ------------------------------
 app.use("/api/users", userRoutes);
 app.use("/api/patients", patientRoutes);
-app.use("/api/patient-appointments", appointmentRoutes2);
 app.use("/api/reports", reportRoutes);
 
 // ------------------------------
