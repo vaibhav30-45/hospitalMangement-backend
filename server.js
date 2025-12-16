@@ -6,7 +6,6 @@ import connectDB from './src/config/db.js';
 import doctorRoutes from "./src/routes/doctors.js";
 import bloodRoutes from "./src/routes/blood.js";
 import contactRoutes from "./src/routes/contactRoutes.js";
-import ambulanceRoutes from "./src/routes/ambulanceRoutes.js";
 
 // ------------------------------
 //  Import Patient & Lab Routes (from remote)
@@ -47,7 +46,6 @@ app.get("/", (req, res) => {
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/blood", bloodRoutes);
 app.use("/api", contactRoutes);
-app.use("/api/ambulance", ambulanceRoutes);
 
 
 // ------------------------------
