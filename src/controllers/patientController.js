@@ -22,7 +22,7 @@ export const loginPatient = async (req, res) => {
     const valid = await bcrypt.compare(req.body.password, patient.password);
     if (!valid) return res.status(400).json({ message: "Incorrect password" });
 
-    const token = jwt.sign({ id: patient._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    const token = jwt.sign({ id: patient._id }, process.env.JWT_Secret, { expiresIn: "7d" });
 
     res.json({ token, patient });
   } catch (error) {
