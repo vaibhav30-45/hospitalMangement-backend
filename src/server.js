@@ -1,19 +1,20 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import connectDB from './src/config/db.js';
+import connectDB from './config/db.js';
 
-//import doctorRoutes from "./src/routes/doctors.js";
-import bloodRoutes from "./src/routes/blood.js";
-import contactRoutes from "./src/routes/contactRoutes.js";
+import adminRoutes from "./routes/adminRoute.js";
+import bloodRoutes from "./routes/blood.js";
+import contactRoutes from "./routes/contactRoutes.js";
+import vlogRoutes from "./routes/vlogRoutes.js";
 
 // ------------------------------
 //  Import Patient & Lab Routes (from remote)
 // ------------------------------
-import userRoutes from "./src/routes/userRoute.js";
-import reportRoutes from "./src/routes/reportRoute.js";
-import testRoutes from "./src/routes/testRoute.js";
-import testBookRoutes from "./src/routes/testbookRoute.js";
+
+import reportRoutes from "./routes/reportRoute.js";
+import testRoutes from "./routes/testRoute.js";
+import testBookRoutes from "./routes/testbookRoute.js";
 
 dotenv.config();
 
@@ -41,15 +42,14 @@ app.get("/", (req, res) => {
   res.send("Hospital Management Backend Running...");
 });
 
-//app.use("/api/doctors", doctorRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/blood", bloodRoutes);
-app.use("/api", contactRoutes);
-
+app.use("/api/contact", contactRoutes);
+app.use("/api/vlogs", vlogRoutes);
 
 // ------------------------------
 //  Patient System Routes
 // ------------------------------
-app.use("/api/users", userRoutes);
 app.use("/api/reports", reportRoutes);
 
 // ------------------------------

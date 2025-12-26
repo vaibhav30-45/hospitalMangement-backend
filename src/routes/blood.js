@@ -1,38 +1,21 @@
 import express from 'express';
-import verifyToken from '../middleware/auth.js';
-import authorize from '../middleware/authorize.js';
+import adminAuth from '../middleware/adminAuth.js';
 import {
-  upsertInventory,
-  getInventory,
-  createRequest,
-  listRequests,
-  processRequest,
-  addDonor
+  updateBlood,
+  getBloodAvailability,
+  addDonor,
+  getDonors
 } from '../controllers/bloodController.js';
 
 const router = express.Router();
 
-/**
- * Inventory endpoints
- * - upsertInventory: add/remove units (admin or blood_staff)
- * - getInventory: anyone authenticated can view (doctors/patients can view)
- */
-router.post('/inventory', verifyToken, authorize(['admin','blood_staff']), upsertInventory);
-router.get('/inventory', verifyToken, getInventory);
+/* PUBLIC */
+router.get("/", getBloodAvailability);
 
-/**
- * Blood requests
- * - doctor creates request
- * - list: doctor/patient/blood_staff/admin see filtered lists
- * - process request: approve/reject/issue (admin/blood_staff)
- */
-router.post('/request', verifyToken, authorize(['doctor']), createRequest);
-router.get('/requests', verifyToken, listRequests);
-router.put('/request/:id/process', verifyToken, authorize(['admin','blood_staff']), processRequest);
+/* ADMIN */
+router.post("/update", adminAuth, updateBlood);
+router.post("/donor", adminAuth, addDonor);
+router.get("/donor", adminAuth, getDonors);
 
-
-//  Donor
-
-router.post('/donor', verifyToken, authorize(['admin','blood_staff']), addDonor);
 
 export default router;

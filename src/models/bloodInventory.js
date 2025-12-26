@@ -9,15 +9,7 @@ const bloodInventorySchema = new mongoose.Schema({
 
   units: { type: Number, default: 0 },
 
-  location: {
-      type: String,
-      default: "Main Storage", 
-    },
-
   lastUpdated: { type: Date, default: Date.now }
 });
 
-// Prevent duplicate inventory record per location
-bloodInventorySchema.index({ bloodGroup: 1, location: 1 }, { unique: true });
-
-export default mongoose.model("BloodInventory", bloodInventorySchema);
+export default mongoose.model("Blood", bloodInventorySchema);

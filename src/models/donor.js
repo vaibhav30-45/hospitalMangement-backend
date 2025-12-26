@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
 const donorSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, trim: true },
 
   email: { type: String },
 
   phone: { type: String },
 
-  address: { type: String},
-  
+  address: { type: String, trim: true },
+
   bloodGroup: {
     type: String,
     required: true,
@@ -20,8 +20,11 @@ const donorSchema = new mongoose.Schema({
   totalDonations: { type: Number, default: 0 },
 
   notes: { type: String },
-
-  createdAt: { type: Date, default: Date.now }
-});
+},
+  {
+    timestamps: true,
+    versionKey: false
+  }
+);
 
 export default mongoose.model("Donor", donorSchema);

@@ -50,3 +50,8 @@ export const getAllContacts = async (req, res) => {
     });
   }
 };
+
+export const deleteContact = async (req, res) => {
+  await Contact.findByIdAndDelete(req.params.id);
+  res.json({ message: "Deleted" });
+};
