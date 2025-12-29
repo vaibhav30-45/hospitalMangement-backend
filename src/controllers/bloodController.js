@@ -1,5 +1,6 @@
 import Blood from '../models/bloodInventory.js';
 import Donor from '../models/donor.js';
+import BloodRequest from '../models/BloodRequest.js'; 
 
 /* ADMIN */
 export const updateBlood = async (req, res) => {
@@ -32,12 +33,67 @@ export const getBloodAvailability = async (req, res) => {
   res.json(await Blood.find());
 };
 
+export const createBloodRequest = async (req, res) => {
+  try {
+    const { name, bloodGroup, units, contact, urgency } = req.body;
 
-/* ADMIN DONOR */
+    if (!name || !bloodGroup || !units || !contact) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const inventory = await Blood.findOne({ bloodGroup });
+
+    if (!inventory || inventory.units === 0) {
+      return res
+        .status(400)
+        .json({ message: "Blood not available" });
+    }
+
+    if (inventory.units < units) {
+      return res.status(400).json({
+        message: `Only ${inventory.units} units available`,
+      });
+    }
+
+    // Save request
+    const request = await BloodRequest.create({
+      patientName: name,
+      bloodGroup,
+      units,
+      contact,
+      urgency,
+    });
+
+    // Deduct inventory
+    inventory.units -= units;
+    inventory.lastUpdated = new Date();
+    await inventory.save();
+
+    res.status(201).json({
+      message: "Blood request approved",
+      request,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/* ADMIN */
+export const getAllBloodRequests = async (req, res) => {
+  try {
+    const requests = await BloodRequest.find().sort({ createdAt: -1 });
+    res.status(200).json(requests);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/* Public DONOR */
 export const addDonor = async (req, res) => {
   res.json(await Donor.create(req.body));
 };
 
+/* ADMIN */
 export const getDonors = async (req, res) => {
   res.json(await Donor.find());
 };
