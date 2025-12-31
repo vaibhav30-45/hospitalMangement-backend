@@ -2,11 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import adminRoutes from "./routes/adminRoute.js";
 import bloodRoutes from "./routes/blood.js";
 import contactRoutes from "./routes/contactRoutes.js";
-import vlogRoutes from "./routes/vlogRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
 import testRoutes from "./routes/testRoute.js";
 import testBookRoutes from "./routes/testbookRoute.js";
 import appointmentRoutes from "./routes/appointmentRoutes.js";
@@ -18,6 +20,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// 🔹 FIX FOR __dirname (ES MODULE)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 connectDB();
 
 app.use(cors({
@@ -28,6 +34,12 @@ app.use(cors({
 
 app.use(express.json());
 
+// ✅ STATIC UPLOADS (THIS IS THE FIX)
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads"))
+);
+
 // Default route
 app.get("/", (req, res) => {
   res.send("Hospital Management Backend Running...");
@@ -37,14 +49,14 @@ app.get("/", (req, res) => {
 app.use("/api/admin", adminRoutes);
 app.use("/api/blood", bloodRoutes);
 app.use("/api/contact", contactRoutes);
-app.use("/api/vlogs", vlogRoutes);
+app.use("/api/blogs", blogRoutes);
 app.use("/api/tests", testRoutes);
 app.use("/api/testbookings", testBookRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/appointments", rescheduleAppointmentRoutes);
 app.use("/api/doctors", doctorRoutes);
 
-// ✅ Global Error Handler (LAST)
+// Global Error Handler
 app.use((err, req, res, next) => {
   console.error("Global Error:", err);
   res.status(500).json({ success: false, message: "Server Error" });
