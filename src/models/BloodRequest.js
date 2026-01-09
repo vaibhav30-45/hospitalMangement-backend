@@ -9,7 +9,10 @@ const bloodRequestSchema = new mongoose.Schema(
       enum: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
     },
     units: { type: Number, required: true },
-    contact: { type: String, required: true },
+    contact: {
+      type: String, required: true,
+      match: [/^[6-9]\d{9}$/, "Please enter a valid 10-digit contact number"]
+    },
     urgency: {
       type: String,
       enum: ["Normal", "Emergency"],

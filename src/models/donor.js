@@ -5,7 +5,12 @@ const donorSchema = new mongoose.Schema({
 
   email: { type: String },
 
-  phone: { type: String },
+  phone: {
+    type: String,
+    required: true,
+    trim: true,
+    match: [/^[6-9]\d{9}$/, "Please enter a valid 10-digit contact number"]
+  },
 
   address: { type: String, trim: true },
 
