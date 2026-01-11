@@ -3,13 +3,13 @@ import Doctor from "../models/Doctor.js";
 /* Add Doctor (Admin) */
 export const addDoctor = async (req, res) => {
   try {
-    const { name, title, image } = req.body;
+    const { name, title, contact, image } = req.body;
 
-    if (!name || !title || !image) {
+    if (!name || !title || !contact || !image) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const doctor = new Doctor({ name, title, image });
+    const doctor = new Doctor({ name, title, contact, image });
     await doctor.save();
 
     res.status(201).json({
