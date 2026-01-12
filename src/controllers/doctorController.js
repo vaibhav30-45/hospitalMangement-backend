@@ -22,6 +22,32 @@ export const addDoctor = async (req, res) => {
   }
 };
 
+/* Update Doctor (Admin) */
+export const updateDoctor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, title, contact, image } = req.body;
+
+    const doctor = await Doctor.findByIdAndUpdate(
+      id,
+      { name, title, contact, image },
+      { new: true }
+    );
+
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Doctor updated successfully",
+      doctor,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 /*  Get All Doctors (Frontend + Admin) */
 export const getAllDoctors = async (req, res) => {
   try {

@@ -11,10 +11,6 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    date: {
-      type: String,
-      required: true,
-    },
     category: {
       type: String,
       default: "Health Care",
@@ -25,7 +21,7 @@ const blogSchema = new mongoose.Schema(
     },
     shortDesc: {
       type: String,
-      required: true,
+      //required: true,
     },
     fullDesc: [sectionSchema],
   },

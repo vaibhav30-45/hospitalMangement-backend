@@ -4,6 +4,7 @@ import {
   addDoctor,
   getAllDoctors,
   deleteDoctor,
+  updateDoctor,
 } from "../controllers/doctorController.js";
 
 const router = express.Router();
@@ -11,6 +12,7 @@ const router = express.Router();
 /* Admin */
 router.post("/add", adminAuth, addDoctor);
 router.delete("/delete/:id", adminAuth, deleteDoctor);
+router.put("/update/:id", adminAuth, updateDoctor);
 
 /* Public */
 router.get("/", getAllDoctors);

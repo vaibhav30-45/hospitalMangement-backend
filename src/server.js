@@ -12,7 +12,6 @@ import blogRoutes from "./routes/blogRoutes.js";
 import testRoutes from "./routes/testRoute.js";
 import testBookRoutes from "./routes/testbookRoute.js";
 import appointmentRoutes from "./routes/appointmentRoutes.js";
-import rescheduleAppointmentRoutes from "./routes/rescheduleAppointmentRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
 
 dotenv.config();
@@ -53,7 +52,6 @@ app.use("/api/blogs", blogRoutes);
 app.use("/api/tests", testRoutes);
 app.use("/api/testbookings", testBookRoutes);
 app.use("/api/appointments", appointmentRoutes);
-app.use("/api/appointments", rescheduleAppointmentRoutes);
 app.use("/api/doctors", doctorRoutes);
 
 // Global Error Handler
