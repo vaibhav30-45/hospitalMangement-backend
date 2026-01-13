@@ -1,6 +1,8 @@
 import Admin from "../models/Admin.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Doctor from "../models/Doctor.js";
+import Appointment from "../models/Appointment.js";
 
 /* ================= ADMIN SIGNUP ================= */
 export const adminSignup = async (req, res) => {
@@ -67,6 +69,58 @@ export const adminLogin = async (req, res) => {
       message: "Admin login successful",
       token
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getDashboardStats = async (req, res) => {
+  try {
+    // Doctors
+    const allDoctors = await Doctor.countDocuments();
+
+    // Appointments
+    const totalAppointments = await Appointment.countDocuments();
+
+    const today = new Date().toISOString().split("T")[0];
+
+    const todaySessions = await Appointment.countDocuments({
+      date: today
+    });
+
+    const newBooking = todaySessions;
+
+    // Unique patients (mobile or email)
+    const allPatients = (await Appointment.distinct("mobile")).length;
+
+    const pendingAppointments = await Appointment.countDocuments({
+      status: "Pending",
+    });
+
+    res.status(200).json({
+      allDoctors,
+      allPatients,
+      newBooking,
+      todaySessions,
+      totalAppointments,
+      pendingAppointments,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getUpcomingAppointments = async (req, res) => {
+  try {
+    const today = new Date().toISOString().split("T")[0];
+
+    const appointments = await Appointment.find({
+      date: { $gte: today }
+    })
+      .sort({ date: 1, time: 1 })
+      .limit(5); // sirf next 5 upcoming
+
+    res.status(200).json(appointments);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

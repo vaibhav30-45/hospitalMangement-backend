@@ -71,13 +71,41 @@ export const getAllAppointments = async (req, res) => {
 };
 
 export const updateAppointmentStatus = async (req, res) => {
-  const { status } = req.body;
+  try {
+    const { status } = req.body;
 
-  const appointment = await Appointment.findByIdAndUpdate(
-    req.params.id,
-    { status },
-    { new: true }
-  );
+    // Safety check
+    if (!["Pending", "Confirmed", "Cancelled"].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid status value",
+      });
+    }
 
-  res.json({ success: true, appointment });
+    const appointment = await Appointment.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true } // 🔥 VERY IMPORTANT
+    );
+
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Status updated successfully",
+      appointment,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to update status",
+      error: error.message,
+    });
+  }
 };
+
