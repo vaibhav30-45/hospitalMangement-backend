@@ -1,5 +1,15 @@
 # Logs
 logs
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*
+
+# Logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -137,3 +147,18 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Build output
+dist/
+build/
+
+# Cache
+.cache/
+.tmp/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
